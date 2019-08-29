@@ -20,4 +20,8 @@
     <delete id="delete">
         delete from employee where id =#{id}
     </delete>
+
+    <select id="selectByKey" resultType="tws.entity.Employee">
+        select * from `employee` where name like CONCAT('%',#{key},'%')
+    </select>
 </mapper>

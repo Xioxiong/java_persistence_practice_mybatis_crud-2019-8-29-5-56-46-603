@@ -1,6 +1,7 @@
 package tws.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,12 @@ public class EmployeeController {
     @Autowired
     private EmployeeMapper employeeMapper;
 
-    @GetMapping("")
-    public ResponseEntity<List<Employee>> getAll() {
+    @GetMapping
+    public ResponseEntity<List<Employee>> getAll(@RequestParam(required = false) String key) {
+        if(key != null){
+
+            return ResponseEntity.ok(employeeMapper.selectByKey(key));
+        }
         return ResponseEntity.ok(employeeMapper.selectAll());
     }
     @GetMapping("/{id}")
@@ -37,7 +42,7 @@ public class EmployeeController {
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable String id) {
         employeeMapper.updateEmployee(employee,id);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        return ResponseEntity.ok(employee);
     }
 
     @DeleteMapping("/{id}")
@@ -45,4 +50,5 @@ public class EmployeeController {
         employeeMapper.delete(id);
         return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
+
 }
