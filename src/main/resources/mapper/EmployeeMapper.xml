@@ -12,4 +12,12 @@
     <select id="selectById" resultType="tws.entity.Employee">
         select * from `employee` where id = #{id};
     </select>
+
+    <update id="updateEmployee">
+        update employee set  name = #{employee.name} ,age = #{employee.age} where id = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from employee where id =#{id}
+    </delete>
 </mapper>

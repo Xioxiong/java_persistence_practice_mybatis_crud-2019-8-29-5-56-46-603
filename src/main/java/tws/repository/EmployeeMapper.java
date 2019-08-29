@@ -13,4 +13,8 @@ public interface EmployeeMapper {
     void addEmployee(@Param("employee") Employee employee );
 
     Employee selectById(@Param("id") String id);
+
+    void updateEmployee(@Param("employee") Employee employee ,@Param("id") String id);
+
+    void delete(@Param("id") String id);
 }

@@ -1,6 +1,7 @@
 package tws.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tws.entity.Employee;
@@ -32,5 +33,16 @@ public class EmployeeController {
         employee.setId(id);
         employeeMapper.addEmployee(employee);
         return ResponseEntity.created(URI.create("/employees"+id)).build();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee,@PathVariable String id) {
+        employeeMapper.updateEmployee(employee,id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable String id) {
+        employeeMapper.delete(id);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }
