@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tws.dto.EmployeeDto;
 import tws.entity.Employee;
 import tws.repository.EmployeeMapper;
+import tws.service.EmployeeService;
 
 import java.net.URI;
 import java.util.List;
@@ -18,6 +20,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private EmployeeService employeeService;
+
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAll(@RequestParam(required = false) String key) {
@@ -28,9 +33,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeMapper.selectAll());
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployees(@PathVariable String id) {
-        Employee employee = employeeMapper.selectById(id);
-        return ResponseEntity.ok(employee);
+    public ResponseEntity<EmployeeDto> getEmployees(@PathVariable String id) {
+        EmployeeDto employeeDto = employeeService.getEmployeeWithDesc(id);
+        return ResponseEntity.ok(employeeDto);
     }
     @PostMapping()
     public ResponseEntity<Employee> addEmployee(@RequestBody Employee employee) {
