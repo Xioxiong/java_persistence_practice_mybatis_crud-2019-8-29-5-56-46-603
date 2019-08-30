@@ -25,12 +25,17 @@ public class EmployeeController {
 
 
     @GetMapping
-    public ResponseEntity<List<Employee>> getAll(@RequestParam(required = false) String key) {
-        if(key != null){
-
-            return ResponseEntity.ok(employeeMapper.selectByKey(key));
-        }
-        return ResponseEntity.ok(employeeMapper.selectAll());
+    public ResponseEntity<List<Employee>> getAll(
+            @RequestParam(required = false) int page,
+            @RequestParam(required = false) int pageSize
+    ) {
+        return ResponseEntity.ok(employeeService.getEmployees(page,pageSize));
+    }
+    @GetMapping("key")
+    public ResponseEntity<List<Employee>> getEmployeesByKey(
+            @RequestParam(required = false) String key
+    ) {
+        return ResponseEntity.ok(employeeService.getEmployeesByKey(key));
     }
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> getEmployees(@PathVariable String id) {

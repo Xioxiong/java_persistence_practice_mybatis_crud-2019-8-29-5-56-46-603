@@ -6,6 +6,8 @@ import tws.dto.EmployeeDto;
 import tws.entity.Employee;
 import tws.repository.EmployeeMapper;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -16,5 +18,16 @@ public class EmployeeService {
         Employee employee = employeeMapper.selectById(id);
         EmployeeDto employeeDto = new EmployeeDto(employee.getId(),employee.getName(),employee.getAge(),"姓名是："+employee.getName()+"年龄是："+employee.getAge());
         return employeeDto;
+    }
+
+    public List<Employee> getEmployees(int page, int pageSize){
+        int offset = (page-1)*pageSize;
+        List list = employeeMapper.selectAll(offset,pageSize);
+        return list;
+    }
+
+    public List<Employee> getEmployeesByKey(String key){
+        List list = employeeMapper.selectByKey(key);
+        return list;
     }
 }

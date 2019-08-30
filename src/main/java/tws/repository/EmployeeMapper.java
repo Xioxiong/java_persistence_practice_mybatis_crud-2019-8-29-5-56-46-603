@@ -8,7 +8,9 @@ import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-    List<Employee> selectAll();
+    List<Employee> selectAll(@Param("offset") int offset,@Param("pageSize") int pageSize);
+
+    List<Employee> selectEmployees();
 
     void addEmployee(@Param("employee") Employee employee );
 

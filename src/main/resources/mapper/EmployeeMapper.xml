@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tws.repository.EmployeeMapper">
     <select id="selectAll" resultType="tws.entity.Employee">
+        select * from `employee` LIMIT #{offset},#{pageSize} ;
+    </select>
+
+    <select id="selectEmployees" resultType="tws.entity.Employee">
         select * from `employee`;
     </select>
 
@@ -22,6 +26,10 @@
     </delete>
 
     <select id="selectByKey" resultType="tws.entity.Employee">
-        select * from `employee` where name like CONCAT('%',#{key},'%')
+        select * from `employee`
+        <if test="key != null">
+          <bind name="key" value="'%'+key+'%'"/>
+            where name like #{key}
+        </if>
     </select>
 </mapper>
